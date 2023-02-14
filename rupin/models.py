@@ -1,3 +1,5 @@
+from flask_login import UserMixin
+
 from . import db
 
 """
@@ -8,19 +10,23 @@ pin_tag = db.Table('pin_tag',
                     db.Column('pin_id', db.Integer, db.ForeignKey('pin.id')),
                     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
                     )
+user_user = db.Table('user_user',
+                    db.Column('subscription_id', db.Integer, db.ForeignKey('user.id')),
+                    db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
+                    )
 
 """
 Модели пользователя
 """
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     nickname = db.Column(db.String(32), index=True, unique=True)
 
     email = db.Column(db.String(120), index=True, unique=True)
     avatar = db.Column(db.String(256))
-    
+
     name = db.Column(db.String(64))
 
     password_hash = db.Column(db.String(128))
@@ -28,6 +34,7 @@ class User(db.Model):
     created_pins = db.relationship('Pin', backref='user')
     saved_pins = db.relationship('SavedPin', backref='user')
     collections = db.relationship('Collection', backref='user')
+    subscriptions = db.relationship('User', secondary=user_user, backref='user')
 
     def __repr__(self):
         return '<User {}>'.format(self.username) 
@@ -45,7 +52,7 @@ class Pin(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     comments = db.relationship('Comment', backref='pin')
-    tags = db.relationship('Tag', secondary=pin_tag, backref='posts')
+    tags = db.relationship('Tag', secondary=pin_tag, backref='pin')
     
     def __repr__(self):
         return '<Pin {}>'.format(self.title)
