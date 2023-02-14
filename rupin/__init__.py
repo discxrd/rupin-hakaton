@@ -1,17 +1,15 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
-db = SQLAlchemy()
+app = Flask(__name__, instance_relative_config=False)
+app.config.from_object("config.Config")
 
-def create_app():
-    app = Flask(__name__, instance_relative_config=False)
-    app.config.from_object("config.Config")
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
-    db.init_app(app)
+from .home import home
+from .api import api
 
-    with app.app_context():
-        from .home import home
-
-        app.register_blueprint(home.home_bp)
-
-        return app
+app.register_blueprint(home.home_bp)
+app.register_blueprint(api.api_bp)
