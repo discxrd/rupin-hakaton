@@ -1,26 +1,173 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Flask Auth Example</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
-    </head>
+<!doctype html>
+<html lang="ru">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <body>
-        <a href="{{ url_for('home_bp.index') }}" class="navbar-item">
-            Home
-        </a>
-        <a href="{{ url_for('home_bp.profile') }}" class="navbar-item">
-            Profile
-        </a>
-        <a href="{{ url_for('auth_bp.sign_in') }}" class="navbar-item">
-            Login
-        </a>
-        <a href="{{ url_for('auth_bp.sign_up') }}" class="navbar-item">
-            Register
-        </a>
-    </body>
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <!-- JQuery-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    
+    <title>RuPin - РуПин</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="{{ url_for('static', filename='favicon.ico') }}" alt="" width="" height="" alt="">
+        </a>
+        <ul class="navbar-nav mr-auto">
+          <button id="login" class="btn btn-outline-light" type="submit">Войти</button>
+          <button class="btn btn-outline-light" type="submit">Зарегестрироваться</button>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Landing -->
+    <div id="sec1" class="section container vh-100 d-flex align-items-center justify-content-center">
+      <div class="row justify-content-md-center">
+        <div class="col col-lg-13 text-start">
+          <h1 class="text-center">Добро пожаловать на RuPin</h1>
+        </div>
+        <div class="w-100"></div>
+        <div class="col col-lg-6">
+          <h2>Наслаждайтесь свежими идеями и получайте удовольствие.</h2>
+        </div>
+      </div>
+    </div>
+
+    <div id="sec2" class="section container vh-100 d-flex align-items-center justify-content-center">
+      <div>
+          <h1>You Div</h1>
+      </div>
+    </div>
+
+    <div class="shadow vh-100 w-100"></div>
+
+    <div id="sec3" class="section container vh-100 d-flex align-items-center justify-content-center">
+      <div>
+          <h1>Your Div</h1>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="form-container">
+      <form id="form" action="/api/v1/sign_in" method="post">
+        <div class="mb-3">
+          <input type="email" class="form-control" id="email">
+        </div>
+        <div class="mb-3">
+          <input type="password" class="form-control" id="password">
+        </div>
+        <button type="submit" class="btn btn-primary"">Войти</button>
+      </form>  
+    </div>
+
+    <!-- Web page script -->
+    <script>
+
+      $(document).ready(function() {
+
+        $("form").submit(function (event) {
+          var formData = {
+            email: $("#email").val(),
+            password: $("#password").val(),
+          };
+
+          $.ajax({
+            type: "POST",
+            url: "api/v1/sign_in",
+            data: formData,
+            dataType: "json",
+            encode: true,
+          }).done(function (data) {
+            console.log(data);
+            if (!data.success) {
+              
+            if (data.errors.name) {
+              $("#name-group").addClass("has-error");
+              $("#name-group").append(
+                '<div class="help-block">' + data.errors.name + "</div>"
+              );
+            }
+
+            if (data.errors.email) {
+              $("#email-group").addClass("has-error");
+              $("#email-group").append(
+                '<div class="help-block">' + data.errors.email + "</div>"
+              );
+            }
+
+            if (data.errors.superheroAlias) {
+              $("#superhero-group").addClass("has-error");
+              $("#superhero-group").append(
+                '<div class="help-block">' + data.errors.superheroAlias + "</div>"
+              );
+            }
+          } else {
+            $("form").html(
+              '<div class="alert alert-success">' + data.message + "</div>"
+            );
+          }
+          });
+
+          event.preventDefault();
+        });
+
+        var delay = false;
+        var currentPage = 1;
+        var pageCount = $(".section").length;
+        var swipe = document.getElementsByTagName('.section');
+        var form_showed = false;
+
+        $("#login").click( function() {
+          $(".form-container").toggle("fast");
+          $(".shadow").toggle("fast");
+          form_showed = !form_showed;
+        });
+
+        $(document).on('mousewheel DOMMouseScroll', function(event) {
+              if (delay) return;
+              delay = true;
+              setTimeout(function() { delay = false }, 400)
+              if (form_showed) return;
+
+              var wd = event.originalEvent.wheelDelta || -event.originalEvent.detail;
+
+              if (wd < 0) {
+                  if (currentPage < pageCount) {
+                      currentPage++;
+                  }
+              } else {
+                  if (1 < currentPage) {
+                      currentPage--;
+                  }
+              }
+          
+              $('html,body').animate({
+                  scrollTop: $('#sec' + currentPage).offset().top
+              }, 50);
+          });
+
+          
+      });  
+    </script>
+
+    <!-- Ion icons CDN -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+
+  </body>
 </html>

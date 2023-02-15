@@ -1,0 +1,78 @@
+@import url('https://fonts.cdnfonts.com/css/rubik');
+
+html {
+  height: 100%;
+}
+
+body {
+    background-color: #1e1e1e !important;
+    overflow: hidden;
+}
+
+* {
+    font-family: 'Rubik', sans-serif !important;
+    color: #E0DDCF !important;
+}
+
+h1 {
+    font-size: 60pt !important;
+    font-weight: 500 !important;
+}
+
+h2 {
+    font-size: 45pt !important;
+    text-align: center;
+    font-weight: 300 !important;
+}
+
+.btn {
+    border-radius: 30pt !important;
+    border-width: 2pt !important;
+    border-color: #E0DDCF !important;
+    margin-right: 20pt;
+}
+
+.btn:hover {
+    background-color: #E0DDCF !important;
+    color: #1e1e1e !important;
+}
+
+.navbar {
+    padding-top: 30pt !important;
+    padding-bottom: 30pt !important;
+    padding-left: 80pt !important;
+    padding-right: 80pt !important;
+}
+
+h4 {
+    font-size: 60pt !important;
+}
+
+.section {
+    touch-action: none;
+}
+
+.form-container {
+    display: none;
+    background-color: #1e1e1e;
+    padding: 40pt;
+    border-radius: 20pt;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.shadow {
+    display: none;
+    opacity: 30%;
+    background-color: black;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+input {
+    margin-bottom: 50pt;
+}

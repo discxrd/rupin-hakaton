@@ -16,8 +16,6 @@ migrate = Migrate(app, db)
 
 from .home import home
 from .api import api
-from .auth import auth
 
 app.register_blueprint(home.home_bp)
 app.register_blueprint(api.api_bp)
-app.register_blueprint(auth.auth_bp)

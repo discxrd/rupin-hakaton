@@ -1,6 +1,7 @@
 from flask_login import UserMixin
 
 from . import db
+from . import login_manager
 
 """
 Для Многие-ко-многим
@@ -10,15 +11,15 @@ pin_tag = db.Table('pin_tag',
                     db.Column('pin_id', db.Integer, db.ForeignKey('pin.id')),
                     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
                     )
-user_user = db.Table('user_user',
-                    db.Column('subscription_id', db.Integer, db.ForeignKey('user.id')),
-                    db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
-                    )
+#user_user = db.Table('user_user',
+#                    db.Column('subscription_id', db.Integer, db.ForeignKey('user.id')),
+#                    db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
+#                    )
 
 """
 Модели пользователя
 """
-
+@login_manager.user_loader
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
@@ -34,7 +35,7 @@ class User(UserMixin, db.Model):
     created_pins = db.relationship('Pin', backref='user')
     saved_pins = db.relationship('SavedPin', backref='user')
     collections = db.relationship('Collection', backref='user')
-    subscriptions = db.relationship('User', secondary=user_user, backref='user')
+    #subscriptions = db.relationship('User', secondary=user_user, backref='user')
 
     def __repr__(self):
         return '<User {}>'.format(self.username) 

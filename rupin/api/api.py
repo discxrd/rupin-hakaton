@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, request, url_for
+from flask import Blueprint, flash, redirect, request, url_for
 from flask_login import login_user, login_required, logout_user
 
 from rupin.models import User
@@ -35,18 +35,16 @@ API для входа
 
 @api_bp.route("/api/v1/sign_in", methods=["POST"])
 def sign_in():
+    print("LOGGING")
     email = request.form.get('email')
     password_hash = request.form.get('hash')
 
     user = User.query.filter_by(email=email).first()
 
     if not user or not check_password_hash(user.password, password_hash):
-        #flash('Please check your login details and try again.')
-        #return redirect(url_for('auth.login'))
-        return "error"
+        return "No user"
 
-    login_user(user, remember=True)
-    pass
+    return "Success"
 
 @api_bp.route("/api/v1/sign_up", methods=["POST"])
 def sign_up():
@@ -102,3 +100,4 @@ def pin_new():
 @api_bp.route("/api/v1/feed", methods=["POST"])
 def feed():
     pass
+
