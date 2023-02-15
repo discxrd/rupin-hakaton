@@ -69,7 +69,8 @@
         <div class="mb-3">
           <input type="password" class="form-control" id="password">
         </div>
-        <button type="submit" class="btn btn-primary"">Войти</button>
+        <div class="help"></div>
+        <button class="submit-btn btn" type="submit">Войти</button>
       </form>  
     </div>
 
@@ -78,47 +79,33 @@
 
       $(document).ready(function() {
 
+        var password_help = $("#emailHelp")
+        var email_help = $("#passwordHelp")
+
         $("form").submit(function (event) {
           var formData = {
             email: $("#email").val(),
             password: $("#password").val(),
           };
 
-          $.ajax({
-            type: "POST",
-            url: "api/v1/sign_in",
-            data: formData,
-            dataType: "json",
-            encode: true,
-          }).done(function (data) {
-            console.log(data);
-            if (!data.success) {
-              
-            if (data.errors.name) {
-              $("#name-group").addClass("has-error");
-              $("#name-group").append(
-                '<div class="help-block">' + data.errors.name + "</div>"
-              );
-            }
+          var request = $.ajax({
+              type: "POST",
+              url: "api/v1/sign_in",
+              data: formData,
+              dataType: "json",
+              encode: true,
+          });
 
-            if (data.errors.email) {
-              $("#email-group").addClass("has-error");
-              $("#email-group").append(
-                '<div class="help-block">' + data.errors.email + "</div>"
-              );
-            }
+          request.done(function (data) {
+              console.log(data);
 
-            if (data.errors.superheroAlias) {
-              $("#superhero-group").addClass("has-error");
-              $("#superhero-group").append(
-                '<div class="help-block">' + data.errors.superheroAlias + "</div>"
-              );
-            }
-          } else {
-            $("form").html(
-              '<div class="alert alert-success">' + data.message + "</div>"
+          });
+
+          request.fail(function (jqXHR, status) {
+            console.log("PISAPOPA");
+            $(".help").html(
+              '<small id="emailHelp" class="form-text text-muted">'+jqXHR.responseText+'</small>'
             );
-          }
           });
 
           event.preventDefault();

@@ -37,14 +37,17 @@ API для входа
 def sign_in():
     print("LOGGING")
     email = request.form.get('email')
-    password_hash = request.form.get('hash')
+    password = request.form.get('password')
 
     user = User.query.filter_by(email=email).first()
 
-    if not user or not check_password_hash(user.password, password_hash):
-        return "No user"
+    if not user:
+        return "Нет пользователя связанного с этой почтой", 400
 
-    return "Success"
+    if not check_password_hash(user.password, password):
+        return "Неправильный пароль", 400
+
+    return "Success", 304
 
 @api_bp.route("/api/v1/sign_up", methods=["POST"])
 def sign_up():

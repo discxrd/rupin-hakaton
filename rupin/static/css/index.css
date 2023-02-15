@@ -26,15 +26,20 @@ h2 {
 }
 
 .btn {
+    background-color: #1e1e1e !important;
     border-radius: 30pt !important;
     border-width: 2pt !important;
     border-color: #E0DDCF !important;
     margin-right: 20pt;
 }
 
-.btn:hover {
+.btn:hover  {
     background-color: #E0DDCF !important;
     color: #1e1e1e !important;
+}
+
+.submit-btn {
+    width: 100%;
 }
 
 .navbar {
