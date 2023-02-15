@@ -1,5 +1,7 @@
 $(document).ready(function() {
     $("form").submit(function (event) {
+        event.preventDefault();
+
         var formData = {
             email: $("#email").val(),
             password: $("#password").val(),
@@ -24,44 +26,36 @@ $(document).ready(function() {
             '<small id="emailHelp" class="form-text text-muted">'+jqXHR.responseText+'</small>'
             );
         });
-
-      event.preventDefault();
     });
 
     var delay = false;
     var currentPage = 1;
     var pageCount = $(".section").length;
-    var swipe = document.getElementsByTagName('.section');
     var form_showed = false;
 
     $("#login").click( function() {
       $(".form-container").toggle("fast");
       $(".shadow").toggle("fast");
+
       form_showed = !form_showed;
     });
 
     $(document).on('mousewheel DOMMouseScroll', function(event) {
-          if (delay) return;
-          delay = true;
-          setTimeout(function() { delay = false }, 400)
-          if (form_showed) return;
+        if (delay) return;
 
-          var wd = event.originalEvent.wheelDelta || -event.originalEvent.detail;
+        delay = true;
+        setTimeout(function() { delay = false }, 400)
 
-          if (wd < 0) {
-              if (currentPage < pageCount) {
-                  currentPage++;
-              }
-          } else {
-              if (1 < currentPage) {
-                  currentPage--;
-              }
-          }
-      
-          $('html,body').animate({
-              scrollTop: $('#sec' + currentPage).offset().top
-          }, 50);
-      });
+        if (form_showed) return;
 
-      
-  });  
+        var wheelDelta = event.originalEvent.wheelDelta || -event.originalEvent.detail;
+
+        if (wheelDelta < 0) {
+            if (currentPage < pageCount) { currentPage++; }
+        } else {
+            if (1 < currentPage) { currentPage-- }; 
+        }
+    
+        $('html,body').animate({ scrollTop: $('#sec' + currentPage).offset().top }, 50);
+    });
+});  

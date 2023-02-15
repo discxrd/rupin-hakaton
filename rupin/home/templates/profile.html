@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<!-- CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+         
+<!-- Web page scripts -->
+<script type="module" src="{{ url_for('static', filename='scripts/profile.js') }}"></script>
+
+<title>РуПин - {{ profile_name }}</title>
+{% endblock %}
+
+{% block body %}
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="#">
+			<img src="{{ url_for('static', filename='favicon.ico') }}" alt="" width="" height="" alt="">
+		</a>
+		
+		<ul class="navbar-nav me-auto">
+
+		</ul>
+	</div>
+</nav>
+  
+{% endblock %}

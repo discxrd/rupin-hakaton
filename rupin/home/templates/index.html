@@ -11,59 +11,68 @@
 {% endblock %}
 
 {% block body %}
+
+<!-- Hide other site -->
 <div class="shadow vh-100 w-100"></div>
+
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark">
 	<div class="container-fluid">
-	  <a class="navbar-brand" href="#">
-		<img src="{{ url_for('static', filename='favicon.ico') }}" alt="" width="" height="" alt="">
-	  </a>
-	  <ul class="navbar-nav mr-auto">
-		<button id="login" class="btn btn-outline-light" type="submit">Войти</button>
-		<button class="btn btn-outline-light" type="submit">Зарегестрироваться</button>
-	  </ul>
+		<a class="navbar-brand" href="#">
+			<img src="{{ url_for('static', filename='favicon.ico') }}" alt="" width="" height="" alt="">
+		</a>
+		
+		<ul class="navbar-nav mr-auto">
+			<button id="login" class="btn btn-outline-light" type="submit">Войти</button>
+			<button class="btn btn-outline-light" type="submit">Зарегестрироваться</button>
+		</ul>
 	</div>
-  </nav>
+</nav>
 
-  <!-- Landing -->
-  <div id="sec1" class="section container vh-100 d-flex align-items-center justify-content-center">
+<!-- Landing -->
+<div id="sec1" class="section container vh-100 d-flex align-items-center justify-content-center">
 	<div class="row justify-content-md-center">
-	  <div class="col col-lg-13 text-start">
-		<h1 class="text-center">Добро пожаловать на RuPin</h1>
-	  </div>
-	  <div class="w-100"></div>
-	  <div class="col col-lg-6">
-		<h2>Наслаждайтесь свежими идеями и получайте удовольствие.</h2>
-	  </div>
-	</div>
-  </div>
+		<div class="col col-lg-13 text-start">
+			<h1 class="text-center">Добро пожаловать на RuPin</h1>
+		</div>
 
-  <div id="sec2" class="section container vh-100 d-flex align-items-center justify-content-center">
+		<div class="w-100"></div>
+		
+		<div class="col col-lg-6">
+			<h2>Наслаждайтесь свежими идеями и получайте удовольствие.</h2>
+		</div>
+	</div>
+</div>
+
+<div id="sec2" class="section container vh-100 d-flex align-items-center justify-content-center">
 	<div>
 		<h1>You Div</h1>
 	</div>
-  </div>
+</div>
 
-  <div id="sec3" class="section container vh-100 d-flex align-items-center justify-content-center">
+<div id="sec3" class="section container vh-100 d-flex align-items-center justify-content-center">
 	<div>
 		<h1>Your Div</h1>
 	</div>
-  </div>
+</div>
   
 
-  <!-- Login form -->
-  <div class="form-container">
+<!-- Login form -->
+<div class="form-container">
 	<h3>Вход</h3>
-	<form id="form" action="/api/v1/sign_in" method="post">
-	  <div class="mb-3">
-		<input type="email" class="form-control" id="email">
-	  </div>
-	  <div id="login-for-margin" class="mb-3">
-		<input type="password" class="form-control" id="password">
-	  </div>
-	  <div class="help"></div>
-	  <button class="submit-btn btn" type="submit">Войти</button>
+		<form id="form" action="/api/v1/sign_in" method="post">
+			<div class="mb-3">
+				<input type="email" class="form-control" id="email">
+			</div>
+			
+			<div id="login-for-margin" class="mb-3">
+				<input type="password" class="form-control" id="password">
+			</div>
+			
+			<div class="help"></div>
+			
+			<button class="submit-btn btn" type="submit">Войти</button>
 	</form>  
-  </div>
+</div>
   
 {% endblock %}
